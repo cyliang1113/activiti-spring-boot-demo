@@ -13,10 +13,10 @@ import javax.sql.DataSource;
 @Configuration
 public class ApplicationConfig {
 
-    @Bean
-    public DataSource dataSource(){
-        return new BasicDataSource();
-    }
+//    @Bean
+//    public DataSource dataSource(){
+//        return new BasicDataSource();
+//    }
 
     @Bean
     public PlatformTransactionManager transactionManager(DataSource dataSource){

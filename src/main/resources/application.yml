@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-      name: activiti-spring-boot-demo
+    name: activiti-spring-boot-demo
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.16.204:3306/activiti_test?useUnicode=true&characterEncoding=utf-8
