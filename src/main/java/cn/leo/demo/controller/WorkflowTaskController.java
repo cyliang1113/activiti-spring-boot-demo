@@ -1,11 +1,7 @@
 package cn.leo.demo.controller;
 
-import cn.leo.demo.po.WorkflowTask;
+import cn.leo.demo.api.po.WorkflowTask;
 import cn.leo.demo.service.WorkflowTaskService;
-import cn.leo.demo.service.WorkflowTaskServiceImpl;
-import org.activiti.engine.task.Task;
-import org.activiti.engine.task.TaskQuery;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 

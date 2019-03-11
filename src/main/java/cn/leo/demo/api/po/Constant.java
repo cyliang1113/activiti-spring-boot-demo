@@ -1,4 +1,4 @@
-package cn.leo.demo.po;
+package cn.leo.demo.api.po;
 
 public class Constant {
 

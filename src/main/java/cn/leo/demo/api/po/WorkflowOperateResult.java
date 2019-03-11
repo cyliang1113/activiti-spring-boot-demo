@@ -1,6 +1,10 @@
-package cn.leo.demo.po;
+package cn.leo.demo.api.po;
 
-public class WorkflowOperateResult {
+import java.io.Serializable;
+
+public class WorkflowOperateResult implements Serializable {
+    private static final long serialVersionUID = 8790982583158579549L;
+
     private boolean success;
     private String message;
 
@@ -21,4 +25,19 @@ public class WorkflowOperateResult {
         return result;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }

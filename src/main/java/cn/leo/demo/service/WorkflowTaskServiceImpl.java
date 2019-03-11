@@ -1,8 +1,8 @@
 package cn.leo.demo.service;
 
-import cn.leo.demo.po.Constant;
-import cn.leo.demo.po.WorkflowOperateResult;
-import cn.leo.demo.po.WorkflowTask;
+import cn.leo.demo.api.po.Constant;
+import cn.leo.demo.api.po.WorkflowOperateResult;
+import cn.leo.demo.api.po.WorkflowTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static cn.leo.demo.po.Constant._RESULT;
+import static cn.leo.demo.api.po.Constant._RESULT;
 
 @Service("workflowTaskService")
 public class WorkflowTaskServiceImpl implements WorkflowTaskService {
@@ -30,6 +30,28 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
     @Autowired
     private HistoryService historyService;
 
+
+    /**
+     * 待办的任务总条数
+     */
+    @Override
+    public int todoTotal(String userId, String orderNo, Date sTime, Date eTime) {
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        if (StringUtils.isNotBlank(userId)){
+            taskQuery.taskAssignee(userId);
+        }
+        if (StringUtils.isNotBlank(orderNo)){
+            taskQuery.processInstanceBusinessKey(orderNo);
+        }
+        if(sTime != null){
+            taskQuery.taskCreatedAfter(sTime);
+        }
+        if(eTime != null){
+            taskQuery.taskCreatedAfter(eTime);
+        }
+        long count = taskQuery.count();
+        return (int) count;
+    }
 
     @Override
     public List<WorkflowTask> todoList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
@@ -79,6 +101,28 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         }
     }
 
+    /**
+     * 待认领任务总条数
+     */
+    @Override
+    public int waitClaimTotal(String userId, String orderNo, Date sTime, Date eTime) {
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        if (StringUtils.isNotBlank(userId)){
+            taskQuery.taskCandidateUser(userId);
+        }
+        if (StringUtils.isNotBlank(orderNo)){
+            taskQuery.processInstanceBusinessKey(orderNo);
+        }
+        if(sTime != null){
+            taskQuery.taskCreatedAfter(sTime);
+        }
+        if(eTime != null){
+            taskQuery.taskCreatedAfter(eTime);
+        }
+        long count = taskQuery.count();
+        return (int) count;
+    }
+
     @Override
     public List<WorkflowTask> waitClaimList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
         if(startRow == null || pageSize == null){
@@ -120,6 +164,28 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         }
     }
 
+    /**
+     * 已完成的任务总条数
+     */
+    @Override
+    public int finishedTotal(String userId, String orderNo, Date sTime, Date eTime) {
+        HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
+        if (StringUtils.isNotBlank(userId)){
+            historicTaskInstanceQuery.taskAssignee(userId);
+        }
+        if (StringUtils.isNotBlank(orderNo)){
+            historicTaskInstanceQuery.processInstanceBusinessKey(orderNo);
+        }
+        if(sTime != null){
+            historicTaskInstanceQuery.taskCreatedAfter(sTime);
+        }
+        if(eTime != null){
+            historicTaskInstanceQuery.taskCreatedAfter(eTime);
+        }
+        long count = historicTaskInstanceQuery.count();
+        return (int) count;
+    }
+
     @Override
     public List<WorkflowTask> finishedList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
         if(startRow == null || pageSize == null){
@@ -141,6 +207,11 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         }
         List<HistoricTaskInstance> tasks = historicTaskInstanceQuery.listPage(startRow, pageSize);
         return transformHistoricTask(tasks);
+    }
+
+    @Override
+    public WorkflowOperateResult appointAssignee(String taskId, String userId) {
+        return null;
     }
 
     /**

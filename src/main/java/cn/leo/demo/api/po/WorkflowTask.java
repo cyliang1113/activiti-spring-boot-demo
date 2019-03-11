@@ -1,15 +1,16 @@
-package cn.leo.demo.po;
+package cn.leo.demo.api.po;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 任务实例
  *
  */
-public class WorkflowTask {
+public class WorkflowTask implements Serializable {
+
+    private static final long serialVersionUID = 8340465192698593587L;
 
     private String id;
     private String name;
@@ -44,7 +45,6 @@ public class WorkflowTask {
         this.assignee = assignee;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateTime() {
         return createTime;
     }

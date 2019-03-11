@@ -1,10 +1,14 @@
-package cn.leo.demo.po;
+package cn.leo.demo.api.po;
 
+
+import java.io.Serializable;
 
 /**
  * 流程定义
  */
-public class WorkflowProcess {
+public class WorkflowProcess implements Serializable {
+
+    private static final long serialVersionUID = 3219067643041629496L;
 
     private String key;
     private int version;

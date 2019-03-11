@@ -1,7 +1,6 @@
 package cn.leo.demo.controller;
 
-import cn.leo.demo.po.WorkflowProcess;
-import cn.leo.demo.po.WorkflowTask;
+import cn.leo.demo.api.po.WorkflowTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
-import static cn.leo.demo.po.Constant._RESULT;
+import static cn.leo.demo.api.po.Constant._RESULT;
 
 
 @Controller
