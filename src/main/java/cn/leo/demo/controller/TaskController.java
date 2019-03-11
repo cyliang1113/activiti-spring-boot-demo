@@ -1,7 +1,7 @@
 package cn.leo.demo.controller;
 
-import cn.leo.demo.po.ProcessDef;
-import cn.leo.demo.po.TaskInst;
+import cn.leo.demo.po.WorkflowProcess;
+import cn.leo.demo.po.WorkflowTask;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
+import static cn.leo.demo.po.Constant._RESULT;
+
 
 @Controller
 @RequestMapping("/task")
 public class TaskController {
-    public static final String _RESULT = "_result";
 
 
 
@@ -47,7 +48,7 @@ public class TaskController {
      */
     @RequestMapping("/todoList")
     @ResponseBody
-    public List<TaskInst> todoList(String userId, String orderNO, Date sTime, Date eTime) {
+    public List<WorkflowTask> todoList(String userId, String orderNO, Date sTime, Date eTime) {
         TaskQuery taskQuery = taskService.createTaskQuery();
         taskQuery.taskAssignee(userId);
         if(StringUtils.isNotBlank(orderNO)){
@@ -60,7 +61,7 @@ public class TaskController {
             taskQuery.taskCreatedBefore(eTime);
         }
         List<Task> list = taskQuery.list();
-        LinkedList<TaskInst> taskList = new LinkedList<>();
+        LinkedList<WorkflowTask> taskList = new LinkedList<>();
         for (Task task : list) {
             taskList.add(fillTaskInst(task));
         }
@@ -105,10 +106,10 @@ public class TaskController {
      */
     @RequestMapping("/waitClaimList")
     @ResponseBody
-    public List<TaskInst> waitClaimList(String userId){
+    public List<WorkflowTask> waitClaimList(String userId){
         TaskQuery taskQuery = taskService.createTaskQuery();
         List<Task> list = taskQuery.taskCandidateUser(userId).list();
-        LinkedList<TaskInst> taskList = new LinkedList<>();
+        LinkedList<WorkflowTask> taskList = new LinkedList<>();
         for (Task task : list) {
             taskList.add(fillTaskInst(task));
         }
@@ -137,7 +138,7 @@ public class TaskController {
 
     @RequestMapping("/done")
     @ResponseBody
-    public List<TaskInst> done(String userId, String orderNo){
+    public List<WorkflowTask> done(String userId, String orderNo){
         HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
         historicTaskInstanceQuery.taskAssignee(userId);
         historicTaskInstanceQuery.taskCompletedBefore(new Date());
@@ -145,9 +146,9 @@ public class TaskController {
             historicTaskInstanceQuery.processInstanceBusinessKey(orderNo);
         }
         List<HistoricTaskInstance> list = historicTaskInstanceQuery.list();
-        LinkedList<TaskInst> taskList = new LinkedList<>();
+        LinkedList<WorkflowTask> taskList = new LinkedList<>();
         for (HistoricTaskInstance historicTaskInstance : list) {
-            TaskInst t = new TaskInst();
+            WorkflowTask t = new WorkflowTask();
             t.setId(historicTaskInstance.getId());
             t.setName(historicTaskInstance.getName());
             t.setAssignee(historicTaskInstance.getAssignee());
@@ -161,15 +162,15 @@ public class TaskController {
         return taskList;
     }
 
-    private List<TaskInst> convert(List<Task> list) {
-        LinkedList<TaskInst> taskList = new LinkedList<>();
+    private List<WorkflowTask> convert(List<Task> list) {
+        LinkedList<WorkflowTask> taskList = new LinkedList<>();
         for (Task task : list)
             taskList.add(fillTaskInst(task));
         return taskList;
     }
 
-    private TaskInst fillTaskInst(Task task){
-        TaskInst t = new TaskInst();
+    private WorkflowTask fillTaskInst(Task task){
+        WorkflowTask t = new WorkflowTask();
         t.setId(task.getId());
         t.setName(task.getName());
         t.setAssignee(task.getAssignee());

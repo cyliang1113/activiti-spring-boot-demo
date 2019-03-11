@@ -4,7 +4,7 @@ package cn.leo.demo.po;
 /**
  * 流程定义
  */
-public class ProcessDef {
+public class WorkflowProcess {
 
     private String key;
     private int version;

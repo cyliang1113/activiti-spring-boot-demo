@@ -1,13 +1,15 @@
 package cn.leo.demo.po;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
  * 任务实例
  *
  */
-public class TaskInst {
+public class WorkflowTask {
 
     private String id;
     private String name;
@@ -16,6 +18,7 @@ public class TaskInst {
     private String processInstanceId;
     private String processName;
     private String businessKey;
+    private String orderNo;
 
     public String getId() {
         return id;
@@ -41,6 +44,7 @@ public class TaskInst {
         this.assignee = assignee;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public Date getCreateTime() {
         return createTime;
     }
@@ -71,5 +75,13 @@ public class TaskInst {
 
     public void setBusinessKey(String businessKey) {
         this.businessKey = businessKey;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }

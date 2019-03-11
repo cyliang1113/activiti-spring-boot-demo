@@ -1,6 +1,6 @@
 package cn.leo.demo.controller;
 
-import cn.leo.demo.po.ProcessDef;
+import cn.leo.demo.po.WorkflowProcess;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
@@ -21,12 +21,12 @@ public class ProcessController {
 
     @RequestMapping("/definitionList")
     @ResponseBody
-    public List<ProcessDef> definitionList(){
+    public List<WorkflowProcess> definitionList(){
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         List<ProcessDefinition> list = processDefinitionQuery.latestVersion().list();
-        ArrayList<ProcessDef> processDefs = new ArrayList<>();
+        ArrayList<WorkflowProcess> processDefs = new ArrayList<>();
         for (ProcessDefinition processDefinition : list) {
-            ProcessDef processDef = new ProcessDef();
+            WorkflowProcess processDef = new WorkflowProcess();
             processDef.setKey(processDefinition.getKey());
             processDef.setVersion(processDefinition.getVersion());
             processDef.setName(processDefinition.getName());
