@@ -18,21 +18,27 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessService {
     @Autowired
     private RepositoryService repositoryService;
 
+    /**
+     * 流程定义list
+     */
     @Override
     public List<WorkflowProcess> definitionList() {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         List<ProcessDefinition> list = processDefinitionQuery.latestVersion().list();
-        ArrayList<WorkflowProcess> processDefs = new ArrayList<>();
+        ArrayList<WorkflowProcess> workflowProcessList = new ArrayList<>();
         for (ProcessDefinition processDefinition : list) {
             WorkflowProcess processDef = new WorkflowProcess();
             processDef.setKey(processDefinition.getKey());
             processDef.setVersion(processDefinition.getVersion());
             processDef.setName(processDefinition.getName());
-            processDefs.add(processDef);
+            workflowProcessList.add(processDef);
         }
-        return processDefs;
+        return workflowProcessList;
     }
 
+    /**
+     * 流程取消
+     */
     @Override
     public WorkflowOperateResult cancel(String processId, String reason) {
         runtimeService.deleteProcessInstance(processId, reason);

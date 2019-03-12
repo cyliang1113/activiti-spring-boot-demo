@@ -53,6 +53,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return (int) count;
     }
 
+    /**
+     * 待办的任务
+     */
     @Override
     public List<WorkflowTask> todoList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
         if(startRow == null || pageSize == null){
@@ -76,6 +79,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return transformTask(tasks);
     }
 
+    /**
+     * 完成任务
+     */
     @Override
     public WorkflowOperateResult complete(String taskId, String userId, Constant.TaskResult result, String comment) {
         if(StringUtils.isBlank(taskId)){
@@ -123,6 +129,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return (int) count;
     }
 
+    /**
+     * 待认领任务
+     */
     @Override
     public List<WorkflowTask> waitClaimList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
         if(startRow == null || pageSize == null){
@@ -146,6 +155,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return transformTask(tasks);
     }
 
+    /**
+     * 认领任务
+     */
     @Override
     public WorkflowOperateResult claim(String taskId, String userId) {
         if(StringUtils.isBlank(taskId)){
@@ -186,6 +198,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return (int) count;
     }
 
+    /**
+     * 已完成的任务
+     */
     @Override
     public List<WorkflowTask> finishedList(String userId, String orderNo, Date sTime, Date eTime, Integer startRow, Integer pageSize) {
         if(startRow == null || pageSize == null){
@@ -209,6 +224,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         return transformHistoricTask(tasks);
     }
 
+    /**
+     * 指定任务处理人
+     */
     @Override
     public WorkflowOperateResult appointAssignee(String taskId, String userId) {
         return null;
