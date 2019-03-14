@@ -3,6 +3,7 @@ package cn.leo.demo.service;
 import cn.leo.demo.api.po.Constant;
 import cn.leo.demo.api.po.WorkflowOperateResult;
 import cn.leo.demo.api.po.WorkflowTask;
+import cn.leo.demo.feign.UserFacadeFeign;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -29,6 +30,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
 
     @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    private UserFacadeFeign userFacadeFeign;
 
 
     /**
@@ -115,6 +119,10 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         TaskQuery taskQuery = taskService.createTaskQuery();
         if (StringUtils.isNotBlank(userId)){
             taskQuery.taskCandidateUser(userId);
+            List groupsByUser = userFacadeFeign.getGroupsByUser(userId);
+            if (groupsByUser != null && !groupsByUser.isEmpty()) {
+                taskQuery.taskCandidateGroupIn(groupsByUser);
+            }
         }
         if (StringUtils.isNotBlank(orderNo)){
             taskQuery.processInstanceBusinessKey(orderNo);
@@ -141,6 +149,10 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         TaskQuery taskQuery = taskService.createTaskQuery();
         if (StringUtils.isNotBlank(userId)){
             taskQuery.taskCandidateUser(userId);
+            List groupsByUser = userFacadeFeign.getGroupsByUser(userId);
+            if (groupsByUser != null && !groupsByUser.isEmpty()) {
+                taskQuery.taskCandidateGroupIn(groupsByUser);
+            }
         }
         if (StringUtils.isNotBlank(orderNo)){
             taskQuery.processInstanceBusinessKey(orderNo);
