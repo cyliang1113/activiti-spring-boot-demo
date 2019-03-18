@@ -16,8 +16,17 @@ public interface WorkflowProcessService {
     List<WorkflowProcess> definitionList();
 
     /**
+     * 开始流程
+     */
+    WorkflowOperateResult start(String processKey, String userId);
+
+    /**
+     * 开始直租流程
+     */
+    WorkflowOperateResult startDirectLeaseProcess(String userId, String orderNo);
+
+    /**
      * 流程取消
      */
     WorkflowOperateResult cancel(String processId, String reason);
-
 }

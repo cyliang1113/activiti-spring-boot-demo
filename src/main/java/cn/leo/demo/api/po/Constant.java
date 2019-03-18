@@ -4,6 +4,8 @@ public class Constant {
 
     public static final String _RESULT = "_result";
 
+    public static final String DIRECT_LEASE_PROCESS_KEY = "directLeaseProcess";
+
     public enum TaskResult {
 
         PASS(1,"通过"),
