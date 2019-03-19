@@ -60,16 +60,17 @@ public class CustomUserEntityManager implements UserIdentityManager, Session {
     @Override
     public List<Group> findGroupsByUser(String userId) {
         log.info("查询用户group, userId:" + userId + ".");
-        // 查询自己的业务系统
-        if("user222".equals(userId) || "user111".equals(userId))
-        {
-            LinkedList<Group> groups = new LinkedList<>();
-            Group group = new GroupEntity();
-            group.setId("group1");
-            groups.add(group);
-            return groups;
-        }
-        return null;
+        throw new UnsupportedOperationException();
+//        // 查询自己的业务系统
+//        if("user222".equals(userId) || "user111".equals(userId))
+//        {
+//            LinkedList<Group> groups = new LinkedList<>();
+//            Group group = new GroupEntity();
+//            group.setId("group1");
+//            groups.add(group);
+//            return groups;
+//        }
+//        return null;
     }
 
     @Override
