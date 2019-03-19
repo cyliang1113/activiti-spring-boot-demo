@@ -58,17 +58,9 @@ public class CustomGroupEntityManager implements GroupIdentityManager, Session {
 
     @Override
     public List<Group> findGroupsByUser(String userId) {
-        log.info("查询用户group, userId:" + userId + ".");
-        throw new UnsupportedOperationException();
-//        LinkedList<Group> groups = new LinkedList<>();
-//        // 查询自己的业务系统
-//        if("user222".equals(userId) || "user111".equals(userId))
-//        {
-//            Group group = new GroupEntity();
-//            group.setId("group1");
-//            groups.add(group);
-//        }
-//        return groups;
+        log.info("查询用户groups, userId:" + userId + ".");
+        LinkedList<Group> groups = new LinkedList<>();
+        return groups;
     }
 
     @Override

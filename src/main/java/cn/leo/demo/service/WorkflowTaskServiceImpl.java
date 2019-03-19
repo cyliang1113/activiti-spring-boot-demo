@@ -15,6 +15,7 @@ import org.activiti.engine.task.TaskQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -86,6 +87,7 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
     /**
      * 完成任务
      */
+    @Transactional
     @Override
     public WorkflowOperateResult complete(String taskId, String userId, Constant.TaskResult result, String comment) {
         if(StringUtils.isBlank(taskId)){
@@ -93,6 +95,9 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
         }
         if(StringUtils.isBlank(userId)){
             return WorkflowOperateResult.operateFailure("用户id为空.");
+        }
+        if(result == null){
+            return WorkflowOperateResult.operateFailure("处理结果为空.");
         }
         TaskQuery taskQuery = taskService.createTaskQuery();
         Task task = taskQuery.taskId(taskId).taskAssignee(userId).singleResult();
@@ -179,7 +184,13 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
             return WorkflowOperateResult.operateFailure("用户id为空.");
         }
         TaskQuery taskQuery = taskService.createTaskQuery();
-        Task task = taskQuery.taskId(taskId).taskCandidateUser(userId).singleResult();
+        taskQuery.taskId(taskId);
+        taskQuery.taskCandidateUser(userId);
+        List groupsByUser = userFacadeFeign.getGroupsByUser(userId);
+        if (groupsByUser != null && !groupsByUser.isEmpty()) {
+            taskQuery.taskCandidateGroupIn(groupsByUser);
+        }
+        Task task = taskQuery.singleResult();
         if (task != null) {
             taskService.claim(taskId, userId);
             return WorkflowOperateResult.operateSuccess();

@@ -12,7 +12,7 @@ public class UserFacadeFeign {
     private static Log log = LogFactory.getLog(UserFacadeFeign.class);
 
 
-    public List getGroupsByUser(String userId) {
+    public List<String> getGroupsByUser(String userId) {
         log.info("userId:" + userId + ".");
         LinkedList<String> list = new LinkedList<>();
         if("user222".equals(userId) || "user111".equals(userId))
