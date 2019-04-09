@@ -37,7 +37,7 @@ public class WorkflowTaskController {
     @RequestMapping("/todoList")
     @ResponseBody
     public List<WorkflowTask> todoList(
-            @RequestParam("userId") String userId,
+            @RequestParam(value = "userId", required = false) String userId,
             @RequestParam(value = "orderNo", required = false) String orderNo,
             @RequestParam(value = "sTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date sTime,
             @RequestParam(value = "eTime", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date eTime,

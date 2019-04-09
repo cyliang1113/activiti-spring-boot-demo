@@ -112,7 +112,7 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
             taskService.complete(taskId, variables);
             return WorkflowOperateResult.operateSuccess();
         } else {
-            return WorkflowOperateResult.operateFailure("任务不存在.");
+            return WorkflowOperateResult.operateFailure("任务已完成或任务不存在.");
         }
     }
 
@@ -195,7 +195,7 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
             taskService.claim(taskId, userId);
             return WorkflowOperateResult.operateSuccess();
         } else {
-            return WorkflowOperateResult.operateFailure("任务不存在.");
+            return WorkflowOperateResult.operateFailure("任务已被认领或任务不存在.");
         }
     }
 

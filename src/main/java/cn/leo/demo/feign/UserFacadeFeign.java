@@ -15,9 +15,11 @@ public class UserFacadeFeign {
     public List<String> getGroupsByUser(String userId) {
         log.info("userId:" + userId + ".");
         LinkedList<String> list = new LinkedList<>();
-        if("user222".equals(userId) || "user111".equals(userId))
+        if("user111".equals(userId))
         {
             list.add("group1");
+        }else if("user222".equals(userId)){
+            list.add("group2");
         }
         return list;
     }

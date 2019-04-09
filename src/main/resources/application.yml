@@ -1,15 +1,13 @@
 # Server settings (ServerProperties)
 server:
   port: 8080
-  sessionTimeout: 30
-  contextPath: /
 
 spring:
   application:
     name: activiti-spring-boot-demo
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/activiti_test?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.16.204:3306/activiti_test?useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
   activiti:
