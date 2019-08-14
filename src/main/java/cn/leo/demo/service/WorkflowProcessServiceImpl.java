@@ -11,12 +11,15 @@ import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class WorkflowProcessServiceImpl implements WorkflowProcessService {
 
     @Autowired
@@ -50,6 +53,7 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessService {
      * 开始流程
      */
     @Override
+    @Transactional
     public WorkflowOperateResult start(String processKey, String userId) {
         if(StringUtils.isBlank(processKey)){
             return WorkflowOperateResult.operateFailure("processKey为空.");
@@ -60,10 +64,11 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessService {
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
         ProcessDefinition pD = processDefinitionQuery.processDefinitionKey(processKey).latestVersion().singleResult();
         if(pD == null || pD.getId() == null){
-            return WorkflowOperateResult.operateFailure("流程不存在.");
+            return WorkflowOperateResult.operateFailure("流程(" + processKey +")不存在");
         }
         identityService.setAuthenticatedUserId(userId);
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(pD.getId());
+        int i = 1 / 0;
         return WorkflowOperateResult.operateSuccess();
     }
 

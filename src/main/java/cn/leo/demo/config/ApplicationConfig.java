@@ -13,9 +13,6 @@ import javax.sql.DataSource;
 @Configuration
 public class ApplicationConfig {
 
-    @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource){
-        return new DataSourceTransactionManager(dataSource);
-    }
+
 
 }

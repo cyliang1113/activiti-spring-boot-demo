@@ -4,7 +4,7 @@ package cn.leo.demo.api.po;
 import java.io.Serializable;
 
 /**
- * 流程定义
+ * 流程
  */
 public class WorkflowProcess implements Serializable {
 

@@ -21,7 +21,7 @@ import java.util.*;
 
 import static cn.leo.demo.api.po.Constant._RESULT;
 
-@Service("workflowTaskService")
+@Service
 public class WorkflowTaskServiceImpl implements WorkflowTaskService {
     @Autowired
     private TaskService taskService;
@@ -91,16 +91,16 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
     @Override
     public WorkflowOperateResult complete(String taskId, String userId, Constant.TaskResult result, String comment) {
         if(StringUtils.isBlank(taskId)){
-            return WorkflowOperateResult.operateFailure("任务id为空.");
+            return WorkflowOperateResult.operateFailure("任务id为空");
         }
         if(StringUtils.isBlank(userId)){
-            return WorkflowOperateResult.operateFailure("用户id为空.");
+            return WorkflowOperateResult.operateFailure("用户id为空");
         }
         if(result == null){
-            return WorkflowOperateResult.operateFailure("处理结果为空.");
+            return WorkflowOperateResult.operateFailure("处理结果为空");
         }
         TaskQuery taskQuery = taskService.createTaskQuery();
-        Task task = taskQuery.taskId(taskId).taskAssignee(userId).singleResult();
+        Task task = taskQuery.taskId(taskId).singleResult();
         if (task != null) {
             if(StringUtils.isNotBlank(comment)){
                 String processInstanceId = task.getProcessInstanceId();
@@ -112,7 +112,7 @@ public class WorkflowTaskServiceImpl implements WorkflowTaskService {
             taskService.complete(taskId, variables);
             return WorkflowOperateResult.operateSuccess();
         } else {
-            return WorkflowOperateResult.operateFailure("任务已完成或任务不存在.");
+            return WorkflowOperateResult.operateFailure("任务已完成或任务不存在");
         }
     }
 
